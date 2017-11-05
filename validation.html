@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>My Task</title>
+        <link rel="stylesheet" href="css/main.css">
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    </head>
+    <body>
+  		<div id="example"></div>
+        
+
+  		<script type="text/babel">
+            class Block extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        norm: true,
+                        enter:true,
+                    };
+                };
+
+                enter = () => {
+                    var value = this.refs.newTxt.value;
+                    var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                    
+                    if (reg.test(value) == false) {
+                        this.setState({norm:false})
+                        this.setState({enter: false})
+                       
+                       alert('Your Email  ' +value+ '  is not valid!');
+
+
+                    } else  {
+                        this.setState({norm:false})
+                        this.setState({enter: true})
+                        
+
+                    }
+                };
+
+                rendTrue = () => {
+                    return(
+                        <div className="box">
+                            <p>Welcome, your email is valid!!!</p>
+                            
+                        </div> 
+                    );
+                };
+                
+                rendFalse = () => {
+                    return(
+                        <div className="box">
+                            <h1>Enter your email</h1>
+                            <form >
+                                <input id="inpt" type="email" ref="newTxt" />
+                                <button onClick={this.enter} className="btn light">Enter</button>
+                            </form>
+                            <p id="txt">Your Email is not valid!!!</p>
+                        </div> 
+                    );
+                };
+
+                
+                rendMover = () => {
+                    return(
+                        <div className="box">
+                            <h1>Enter your email</h1>
+                            <form >
+                                <input type="email" ref="newTxt" />
+                                <button onClick={this.enter}  className="btn light">Enter</button>
+                            </form>
+                        </div> 
+                    );
+                };
+
+                render() {
+                    if(this.state.norm){
+                        return this.rendMover();
+                    } else if (this.state.enter){
+                        return this.rendTrue();
+                    } else {
+                        return this.rendFalse();
+                    }
+
+                }
+            }
+                
+            const app = document.getElementById("example")
+
+  			ReactDOM.render (<div className="field">
+                                <Block />
+                            </div>,app);
+
+  		</script>
+    </body>
+</html>
